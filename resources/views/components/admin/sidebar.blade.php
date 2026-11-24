@@ -121,8 +121,8 @@
 
     {{-- BOTTOM --}}
     <div class="px-3 py-3 border-t border-dark-border space-y-0.5 shrink-0">
-        <a href="{{ route('home') }}" target="_blank" class="sidebar-item">
-            <i data-lucide="external-link" class="w-5 h-5 shrink-0"></i>
+        <a href="{{ route('home', ['locale' => 'id']) }}" target="_blank" class="sidebar-item">
+            <i data-lucide="external-link" class="w-5 h-5"></i>
             <span>Lihat Website</span>
         </a>
         <form method="POST" action="{{ route('logout') }}">

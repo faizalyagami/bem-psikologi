@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(SettingSeeder::class);
 
-        // 1. Buat Permissions
+        // 1. Permissions
         $permissions = [
             'view-dashboard',
             'manage-users',
@@ -33,14 +33,14 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($permissions as $perm) {
-            Permission::firstOrCreate(['name' => $perm]);
+            Permission::firstOrCreate(['name' => $perm, 'guard_name' => 'web']);
         }
 
-        // 2. Buat Roles
-        $superAdmin = Role::firstOrCreate(['name' => 'Super Admin']);
+        // 2. Roles
+        $superAdmin = Role::firstOrCreate(['name' => 'Super Admin', 'guard_name' => 'web']);
         $superAdmin->syncPermissions(Permission::all());
 
-        $adminBem = Role::firstOrCreate(['name' => 'Admin BEM']);
+        $adminBem = Role::firstOrCreate(['name' => 'Admin BEM', 'guard_name' => 'web']);
         $adminBem->syncPermissions([
             'view-dashboard',
             'manage-posts',
@@ -50,18 +50,19 @@ class DatabaseSeeder extends Seeder
             'manage-events',
             'manage-media',
             'manage-aspirations',
-            'manage-settings'
+            'manage-settings',
         ]);
 
-        $sekretaris = Role::firstOrCreate(['name' => 'Sekretaris']);
+        $sekretaris = Role::firstOrCreate(['name' => 'Sekretaris', 'guard_name' => 'web']);
         $sekretaris->syncPermissions(['view-dashboard', 'manage-posts', 'manage-pages', 'manage-events']);
 
-        $humas = Role::firstOrCreate(['name' => 'Humas']);
+        $humas = Role::firstOrCreate(['name' => 'Humas', 'guard_name' => 'web']);
         $humas->syncPermissions(['view-dashboard', 'manage-posts', 'manage-media']);
 
-        Role::firstOrCreate(['name' => 'Viewer'])->syncPermissions(['view-dashboard']);
+        Role::firstOrCreate(['name' => 'Viewer', 'guard_name' => 'web'])
+            ->syncPermissions(['view-dashboard']);
 
-        // 3. Buat Super Admin User
+        // 3. Super Admin User
         $user = User::firstOrCreate(
             ['email' => 'admin@bem-psikologi.test'],
             [
@@ -69,14 +70,14 @@ class DatabaseSeeder extends Seeder
                 'password' => Hash::make('password'),
             ]
         );
-        $user->assignRole('Super Admin');
+        $user->syncRoles(['Super Admin']);  // pakai syncRoles agar bersih
 
-        // 4. Buat Kategori Contoh
+        // 4. Kategori
         \App\Models\Category::firstOrCreate(['slug' => 'berita'], ['name' => 'Berita']);
         \App\Models\Category::firstOrCreate(['slug' => 'artikel'], ['name' => 'Artikel']);
         \App\Models\Category::firstOrCreate(['slug' => 'pengumuman'], ['name' => 'Pengumuman']);
 
-        // 5. Buat Menu Bawaan
+        // 5. Menu — pakai firstOrCreate agar idempoten
         $menus = [
             ['title' => 'Beranda', 'route_name' => 'home', 'sort_order' => 1, 'location' => 'header', 'is_active' => true],
             ['title' => 'Tentang BEM', 'route_name' => null, 'sort_order' => 2, 'location' => 'header', 'is_active' => true],
@@ -85,7 +86,7 @@ class DatabaseSeeder extends Seeder
             ['title' => 'Kontak', 'route_name' => 'frontend.contact', 'sort_order' => 5, 'location' => 'header', 'is_active' => true],
         ];
         foreach ($menus as $menu) {
-            \App\Models\Menu::create($menu);
+            \App\Models\Menu::firstOrCreate(['title' => $menu['title']], $menu);
         }
     }
 }
