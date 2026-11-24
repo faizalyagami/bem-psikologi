@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -40,11 +42,13 @@ Route::middleware(['auth', 'role:Super Admin|Admin BEM|Sekretaris|Humas|Departem
         Route::resource('categories', CategoryController::class)->except(['show']);
         Route::resource('tags', TagController::class)->except(['show', 'create', 'edit']);
         Route::resource('posts', PostController::class)->except(['show']);
+        Route::resource('pages', PageController::class)->except(['show']);
+        Route::resource('events', EventController::class)->except(['show']);
         // Route::view('/posts', 'admin.dashboard.index')->name('posts.index');
-        Route::view('/pages', 'admin.dashboard.index')->name('pages.index');
+        // Route::view('/pages', 'admin.dashboard.index')->name('pages.index');
         // Route::view('/categories', 'admin.dashboard.index')->name('categories.index');
         // Route::view('/tags', 'admin.dashboard.index')->name('tags.index');
-        Route::view('/events', 'admin.dashboard.index')->name('events.index');
+        // Route::view('/events', 'admin.dashboard.index')->name('events.index');
         Route::view('/settings', 'admin.dashboard.index')->name('settings.index');
     });
 
