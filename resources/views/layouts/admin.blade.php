@@ -14,6 +14,14 @@
         rel="stylesheet">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <style>
+        :root {
+            --color-primary: {{ setting('color_primary', '#123C32') }};
+            --color-accent: {{ setting('color_accent', '#D4AD58') }};
+        }
+    </style>
+
 </head>
 
 <body class="bg-dark-bg text-gray-300 font-sans antialiased selection:bg-brand-600 selection:text-white">

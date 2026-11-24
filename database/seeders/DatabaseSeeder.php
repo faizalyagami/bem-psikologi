@@ -12,6 +12,8 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        $this->call(SettingSeeder::class);
+
         // 1. Buat Permissions
         $permissions = [
             'view-dashboard',
@@ -76,11 +78,11 @@ class DatabaseSeeder extends Seeder
 
         // 5. Buat Menu Bawaan
         $menus = [
-            ['title' => 'Beranda', 'route_name' => 'home', 'sort_order' => 1],
-            ['title' => 'Tentang BEM', 'route_name' => null, 'sort_order' => 2],
-            ['title' => 'Informasi', 'route_name' => null, 'sort_order' => 3],
-            ['title' => 'Galeri', 'route_name' => null, 'sort_order' => 4],
-            ['title' => 'Kontak', 'route_name' => null, 'sort_order' => 5],
+            ['title' => 'Beranda', 'route_name' => 'home', 'sort_order' => 1, 'location' => 'header', 'is_active' => true],
+            ['title' => 'Tentang BEM', 'route_name' => null, 'sort_order' => 2, 'location' => 'header', 'is_active' => true],
+            ['title' => 'Informasi', 'route_name' => null, 'sort_order' => 3, 'location' => 'header', 'is_active' => true],
+            ['title' => 'Galeri', 'route_name' => 'frontend.gallery', 'sort_order' => 4, 'location' => 'header', 'is_active' => true],
+            ['title' => 'Kontak', 'route_name' => 'frontend.contact', 'sort_order' => 5, 'location' => 'header', 'is_active' => true],
         ];
         foreach ($menus as $menu) {
             \App\Models\Menu::create($menu);

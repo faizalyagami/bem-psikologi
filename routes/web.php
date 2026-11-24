@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\TagController;
 
 Route::get('/', function () {
@@ -40,6 +41,16 @@ Route::middleware(['auth', 'role:Super Admin|Admin BEM|Sekretaris|Humas|Departem
             Route::delete('/files/{media}', [MediaController::class, 'destroy'])->name('destroy');
             Route::post('/files/{media}/move', [MediaController::class, 'move'])->name('move');
         });
+
+        Route::prefix('settings')->name('settings.')->group(function () {
+            Route::get('/', [SettingController::class, 'index'])->name('index');
+            Route::put('/identity', [SettingController::class, 'updateIdentity'])->name('update-identity');
+            Route::put('/branding', [SettingController::class, 'updateBranding'])->name('update-branding');
+            Route::put('/seo', [SettingController::class, 'updateSeo'])->name('update-seo');
+            Route::put('/email', [SettingController::class, 'updateEmail'])->name('update-email');
+            Route::put('/footer', [SettingController::class, 'updateFooter'])->name('update-footer');
+        });
+
         Route::resource('users', UserController::class)->except(['show']);
         Route::resource('roles', RoleController::class)->except(['show', 'create', 'edit']);
         // Route::view('/users', 'admin.dashboard.index')->name('users.index');
@@ -58,7 +69,7 @@ Route::middleware(['auth', 'role:Super Admin|Admin BEM|Sekretaris|Humas|Departem
         // Route::view('/categories', 'admin.dashboard.index')->name('categories.index');
         // Route::view('/tags', 'admin.dashboard.index')->name('tags.index');
         // Route::view('/events', 'admin.dashboard.index')->name('events.index');
-        Route::view('/settings', 'admin.dashboard.index')->name('settings.index');
+        // Route::view('/settings', 'admin.dashboard.index')->name('settings.index');
     });
 
 require __DIR__ . '/auth.php';
