@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\ProfileController;
@@ -30,7 +31,15 @@ Route::middleware(['auth', 'role:Super Admin|Admin BEM|Sekretaris|Humas|Departem
         Route::view('/dashboard', 'admin.dashboard.index')->name('dashboard');
 
         // Dummy routes sementara (akan diganti di tahap berikutnya)
-        Route::view('/media', 'admin.dashboard.index')->name('media.index');
+        // Route::view('/media', 'admin.dashboard.index')->name('media.index');
+        Route::prefix('media')->name('media.')->group(function () {
+            Route::get('/', [MediaController::class, 'index'])->name('index');
+            Route::post('/upload', [MediaController::class, 'upload'])->name('upload');
+            Route::post('/folders', [MediaController::class, 'createFolder'])->name('folders.store');
+            Route::delete('/folders/{folder}', [MediaController::class, 'deleteFolder'])->name('folders.destroy');
+            Route::delete('/files/{media}', [MediaController::class, 'destroy'])->name('destroy');
+            Route::post('/files/{media}/move', [MediaController::class, 'move'])->name('move');
+        });
         Route::resource('users', UserController::class)->except(['show']);
         Route::resource('roles', RoleController::class)->except(['show', 'create', 'edit']);
         // Route::view('/users', 'admin.dashboard.index')->name('users.index');
