@@ -88,5 +88,20 @@ class DatabaseSeeder extends Seeder
         foreach ($menus as $menu) {
             \App\Models\Menu::firstOrCreate(['title' => $menu['title']], $menu);
         }
+
+        // 6. Halaman Tentang BEM
+        $aboutPage = \App\Models\Page::firstOrCreate(
+            ['status' => 'published'],
+            ['user_id' => $user->id, 'status' => 'published']
+        );
+
+        $aboutPage->translations()->updateOrCreate(
+            ['locale' => 'id'],
+            [
+                'title' => 'Tentang BEM',
+                'slug' => 'tentang-bem',
+                'content' => '<h2>Visi</h2><p>Menjadi lembaga eksekutif mahasiswa yang ...</p><h2>Misi</h2><ul><li>Misi 1</li><li>Misi 2</li></ul>',
+            ]
+        );
     }
 }

@@ -46,7 +46,7 @@
                             <div x-show="open" x-cloak x-transition
                                 class="absolute top-full left-0 mt-2 w-56 bg-white border border-gray-100 rounded-xl shadow-lg py-2">
                                 @foreach ($menu->children as $child)
-                                    <a href="{{ $child->route_name ? route($child->route_name, ['locale' => app()->getLocale()]) : $child->url ?? '#' }}"
+                                    <a href="{{ menuUrl($child) }}"
                                         class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-primary">
                                         {{ $child->title }}
                                     </a>
@@ -54,7 +54,7 @@
                             </div>
                         </div>
                     @else
-                        <a href="{{ $menu->route_name ? route($menu->route_name, ['locale' => app()->getLocale()]) : $menu->url ?? '#' }}"
+                        <a href="{{ menuUrl($menu) }}"
                             class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-primary rounded-lg hover:bg-gray-50 transition">
                             {{ $menu->title }}
                         </a>
@@ -112,13 +112,13 @@
                         </button>
                         <div x-show="sub" x-cloak class="pl-4 mt-1 space-y-1">
                             @foreach ($menu->children as $child)
-                                <a href="{{ $child->url ?? '#' }}"
+                                <a href="{{ menuUrl($child) }}"
                                     class="block px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50">{{ $child->title }}</a>
                             @endforeach
                         </div>
                     </div>
                 @else
-                    <a href="{{ $menu->route_name ? route($menu->route_name, ['locale' => app()->getLocale()]) : $menu->url ?? '#' }}"
+                    <a href="{{ menuUrl($menu) }}"
                         class="block px-3 py-2 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-50">{{ $menu->title }}</a>
                 @endif
             @endforeach

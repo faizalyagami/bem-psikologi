@@ -8,3 +8,13 @@ if (!function_exists('setting')) {
         return app(SettingService::class)->get($key, $default);
     }
 }
+
+if (!function_exists('menuUrl')) {
+    function menuUrl($menu)
+    {
+        if ($menu->route_name && \Illuminate\Support\Facades\Route::has($menu->route_name)) {
+            return route($menu->route_name, ['locale' => app()->getLocale()]);
+        }
+        return $menu->url ?? '#';
+    }
+}

@@ -1,3 +1,11 @@
+@php
+    $footerMenus = \App\Models\Menu::whereNull('parent_id')
+        ->where('is_active', true)
+        ->where('location', 'footer')
+        ->orderBy('sort_order')
+        ->get();
+@endphp
+
 <footer class="bg-primary text-white mt-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -21,20 +29,31 @@
                 <p class="text-sm text-white/70 leading-relaxed">{{ setting('footer_description') }}</p>
             </div>
 
-            {{-- Menu --}}
+            {{-- Menu Dinamis dari Tabel menus (location = footer) --}}
             <div>
                 <h4 class="font-heading font-semibold text-accent mb-4">Navigasi</h4>
                 <ul class="space-y-2 text-sm">
-                    <li><a href="{{ route('home', ['locale' => app()->getLocale()]) }}"
-                            class="text-white/70 hover:text-accent transition">Beranda</a></li>
-                    <li><a href="{{ route('frontend.about', ['locale' => app()->getLocale()]) }}"
-                            class="text-white/70 hover:text-accent transition">Tentang BEM</a></li>
-                    <li><a href="{{ route('frontend.posts.index', ['locale' => app()->getLocale()]) }}"
-                            class="text-white/70 hover:text-accent transition">Berita</a></li>
-                    <li><a href="{{ route('frontend.events', ['locale' => app()->getLocale()]) }}"
-                            class="text-white/70 hover:text-accent transition">Agenda</a></li>
-                    <li><a href="{{ route('frontend.gallery', ['locale' => app()->getLocale()]) }}"
-                            class="text-white/70 hover:text-accent transition">Galeri</a></li>
+                    @forelse($footerMenus as $menu)
+                        <li>
+                            <a href="{{ menuUrl($menu) }}" class="text-white/70 hover:text-accent transition">
+                                {{ $menu->title }}
+                            </a>
+                        </li>
+                    @empty
+                        {{-- Fallback jika belum ada menu footer --}}
+                        <li><a href="{{ route('home', ['locale' => app()->getLocale()]) }}"
+                                class="text-white/70 hover:text-accent transition">Beranda</a></li>
+                        <li><a href="{{ route('frontend.about', ['locale' => app()->getLocale()]) }}"
+                                class="text-white/70 hover:text-accent transition">Tentang BEM</a></li>
+                        <li><a href="{{ route('frontend.posts.index', ['locale' => app()->getLocale()]) }}"
+                                class="text-white/70 hover:text-accent transition">Berita</a></li>
+                        <li><a href="{{ route('frontend.events', ['locale' => app()->getLocale()]) }}"
+                                class="text-white/70 hover:text-accent transition">Agenda</a></li>
+                        <li><a href="{{ route('frontend.gallery', ['locale' => app()->getLocale()]) }}"
+                                class="text-white/70 hover:text-accent transition">Galeri</a></li>
+                        <li><a href="{{ route('frontend.contact', ['locale' => app()->getLocale()]) }}"
+                                class="text-white/70 hover:text-accent transition">Kontak</a></li>
+                    @endforelse
                 </ul>
             </div>
 
