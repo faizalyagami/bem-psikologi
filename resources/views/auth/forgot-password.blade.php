@@ -1,25 +1,49 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+@extends('layouts.auth')
+
+@section('title', 'Lupa Password')
+
+@section('content')
+
+    <div class="mb-8">
+        <h2 class="font-heading text-3xl font-bold text-white mb-2">Lupa Password? 🔒</h2>
+        <p class="text-gray-400">Masukkan email Anda, kami akan mengirimkan tautan reset password.</p>
     </div>
 
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+    @if (session('status'))
+        <div class="mb-4 px-4 py-3 bg-green-900/20 border border-green-900/40 text-green-400 text-sm rounded-lg">
+            {{ session('status') }}
+        </div>
+    @endif
 
-    <form method="POST" action="{{ route('password.email') }}">
+    <form method="POST" action="{{ route('password.email') }}" class="space-y-5">
         @csrf
-
-        <!-- Email Address -->
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            <label for="email" class="admin-label">Email</label>
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i data-lucide="mail" class="w-5 h-5 text-gray-500"></i>
+                </div>
+                <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus
+                    class="admin-input pl-10 @error('email') border-red-500 @enderror"
+                    placeholder="admin@bem-psikologi.test">
+            </div>
+            @error('email')
+                <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
+            @enderror
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
-        </div>
+        <button type="submit"
+            class="w-full flex items-center justify-center gap-2 px-6 py-3 bg-brand-600 hover:bg-brand-500 text-white font-semibold rounded-lg transition shadow-lg shadow-brand-900/50">
+            <i data-lucide="send" class="w-5 h-5"></i>
+            Kirim Tautan Reset
+        </button>
     </form>
-</x-guest-layout>
+
+    <div class="mt-8 pt-6 border-t border-dark-border text-center text-sm">
+        <a href="{{ route('login') }}" class="inline-flex items-center gap-1 text-gray-400 hover:text-white transition">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            Kembali ke Halaman Login
+        </a>
+    </div>
+
+@endsection
