@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AspirationController;
 use Illuminate\Support\Facades\Route;
 
 // ===== FRONTEND CONTROLLERS =====
@@ -58,6 +59,9 @@ Route::middleware(['setlocale'])->group(function () {
             // Kontak & Aspirasi
             Route::get('/kontak', [FrontendContactController::class, 'index'])->name('frontend.contact');
             Route::post('/kontak', [FrontendContactController::class, 'store'])->name('frontend.contact.store');
+
+            Route::get('/cek-aspirasi', [FrontendContactController::class, 'checkStatus'])->name('frontend.contact.check');
+            Route::post('/cek-aspirasi', [FrontendContactController::class, 'showStatus'])->name('frontend.contact.status');
 
             // Halaman statis (catch-all, WAJIB PALING BAWAH)
             Route::get('/{slug}', [FrontendPageController::class, 'show'])->name('frontend.pages.show');
@@ -124,6 +128,14 @@ Route::middleware(['auth', 'role:Super Admin|Admin BEM|Sekretaris|Humas|Departem
         Route::get('/site-contents', [SiteContentController::class, 'index'])->name('site-contents.index');
         Route::put('/site-contents', [SiteContentController::class, 'update'])->name('site-contents.update');
         // Route::view('/site-contents', 'admin.dashboard.index')->name('site-contents.index');
+
+        Route::prefix('aspirations')->name('aspirations.')->group(function () {
+            Route::get('/', [AspirationController::class, 'index'])->name('index');
+            Route::get('/{aspiration}', [AspirationController::class, 'show'])->name('show');
+            Route::post('/{aspiration}/reply', [AspirationController::class, 'reply'])->name('reply');
+            Route::put('/{aspiration}/status', [AspirationController::class, 'updateStatus'])->name('status');
+            Route::delete('/{aspiration}', [AspirationController::class, 'destroy'])->name('destroy');
+        });
 
         Route::resource('categories', CategoryController::class)->except(['show']);
         Route::resource('tags', TagController::class)->except(['show', 'create', 'edit']);

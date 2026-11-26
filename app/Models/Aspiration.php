@@ -10,6 +10,6 @@ class Aspiration extends Model
 
     public function replies()
     {
-        return $this->hasMany(AspirationReply::class);
+        return $this->hasMany(AspirationReply::class)->latest();
     }
 }

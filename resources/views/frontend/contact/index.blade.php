@@ -57,13 +57,26 @@
                     <h2 class="font-heading text-2xl font-bold text-primary mb-6">Kirim Aspirasi</h2>
 
                     @if (session('success'))
-                        <div
-                            class="mb-4 px-4 py-3 bg-green-50 border border-green-200 text-green-700 text-sm rounded-lg flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            {{ session('success') }}
+                        <div class="mb-4 px-4 py-4 bg-green-50 border border-green-200 text-green-800 text-sm rounded-xl">
+                            <div class="flex items-center gap-2 mb-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <strong>Aspirasi berhasil terkirim!</strong>
+                            </div>
+                            <p class="mb-2">{{ session('success') }}</p>
+                            @if (session('ticket_code'))
+                                <div class="mt-3 p-3 bg-white border border-green-300 rounded-lg">
+                                    <p class="text-xs text-gray-600 mb-1">Kode Tiket Anda:</p>
+                                    <p class="text-lg font-bold font-mono text-green-700 tracking-wider">
+                                        {{ session('ticket_code') }}</p>
+                                    <p class="text-xs text-gray-500 mt-2">💡 Simpan kode ini. Gunakan untuk melacak status
+                                        aspirasi di <a
+                                            href="{{ route('frontend.contact.check', ['locale' => app()->getLocale()]) }}"
+                                            class="text-green-700 underline">halaman cek status</a>.</p>
+                                </div>
+                            @endif
                         </div>
                     @endif
 
@@ -122,6 +135,16 @@
                             Kirim Aspirasi
                         </button>
                     </form>
+                    <div class="mt-4 text-center">
+                        <a href="{{ route('frontend.contact.check', ['locale' => app()->getLocale()]) }}"
+                            class="text-sm text-primary hover:text-accent font-medium inline-flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                            Sudah punya kode tiket? Cek status aspirasi Anda di sini
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

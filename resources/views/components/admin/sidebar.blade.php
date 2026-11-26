@@ -109,6 +109,14 @@
             <span>Agenda</span>
         </a>
 
+        @can('manage-aspirations')
+            <a href="{{ route('admin.aspirations.index') }}"
+                class="sidebar-item {{ request()->routeIs('admin.aspirations.*') ? 'sidebar-item-active' : '' }}">
+                <i data-lucide="message-square" class="w-5 h-5 shrink-0"></i>
+                <span>Aspirasi Mahasiswa</span>
+            </a>
+        @endcan
+
         {{-- GROUP: Pengaturan --}}
         <div class="sidebar-group-label">Sistem</div>
 
