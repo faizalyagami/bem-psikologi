@@ -117,6 +117,27 @@
             </a>
         @endcan
 
+        {{-- Departement Group --}}
+        <div class="sidebar-group-label">Organisasi</div>
+
+        @can('manage-settings')
+            <a href="{{ route('admin.departments.index') }}"
+                class="sidebar-item {{ request()->routeIs('admin.departments.*') ? 'sidebar-item-active' : '' }}">
+                <i data-lucide="building-2" class="w-5 h-5 shrink-0"></i>
+                <span>Departemen</span>
+            </a>
+            <a href="{{ route('admin.positions.index') }}"
+                class="sidebar-item {{ request()->routeIs('admin.positions.*') ? 'sidebar-item-active' : '' }}">
+                <i data-lucide="briefcase" class="w-5 h-5 shrink-0"></i>
+                <span>Jabatan</span>
+            </a>
+            <a href="{{ route('admin.members.index') }}"
+                class="sidebar-item {{ request()->routeIs('admin.members.*') ? 'sidebar-item-active' : '' }}">
+                <i data-lucide="users-round" class="w-5 h-5 shrink-0"></i>
+                <span>Anggota</span>
+            </a>
+        @endcan
+
         {{-- GROUP: Pengaturan --}}
         <div class="sidebar-group-label">Sistem</div>
 

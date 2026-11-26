@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(SettingSeeder::class);
         $this->call(SiteContentSeeder::class);
+        $this->call(OrganizationSeeder::class);
 
         // 1. Permissions
         $permissions = [

@@ -15,10 +15,13 @@ use App\Http\Controllers\Frontend\ContactController as FrontendContactController
 // ===== ADMIN CONTROLLERS =====
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\MediaController;
+use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\Admin\PositionController;
 use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\TagController;
@@ -26,6 +29,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SiteContentController;
 use App\Http\Controllers\Admin\TranslationController;
+use App\Http\Controllers\Frontend\OrganizationController;
 use App\Http\Controllers\Frontend\SitemapController;
 
 /*
@@ -64,6 +68,8 @@ Route::middleware(['setlocale'])->group(function () {
 
             Route::get('/cek-aspirasi', [FrontendContactController::class, 'checkStatus'])->name('frontend.contact.check');
             Route::post('/cek-aspirasi', [FrontendContactController::class, 'showStatus'])->name('frontend.contact.status');
+
+            Route::get('/struktur-organisasi', [OrganizationController::class, 'index'])->name('frontend.organization');
 
             // Halaman statis (catch-all, WAJIB PALING BAWAH)
             Route::get('/{slug}', [FrontendPageController::class, 'show'])->name('frontend.pages.show');
@@ -151,4 +157,7 @@ Route::middleware(['auth', 'role:Super Admin|Admin BEM|Sekretaris|Humas|Departem
         Route::resource('pages', PageController::class)->except(['show']);
         Route::resource('events', EventController::class)->except(['show']);
         Route::resource('menus', MenuController::class)->except(['show', 'create', 'edit']);
+        Route::resource('departments', DepartmentController::class)->except(['show', 'create', 'edit']);
+        Route::resource('positions', PositionController::class)->except(['show', 'create', 'edit']);
+        Route::resource('members', MemberController::class)->except(['show']);
     });
