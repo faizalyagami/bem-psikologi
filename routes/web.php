@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\SiteContentController;
 use App\Http\Controllers\Frontend\SitemapController;
 
 /*
@@ -119,7 +120,10 @@ Route::middleware(['auth', 'role:Super Admin|Admin BEM|Sekretaris|Humas|Departem
         // Route::view('/menus', 'admin.dashboard.index')->name('menus.index');
         Route::view('/translations', 'admin.dashboard.index')->name('translations.index');
         Route::view('/logs', 'admin.dashboard.index')->name('logs.index');
-        Route::view('/site-contents', 'admin.dashboard.index')->name('site-contents.index');
+
+        Route::get('/site-contents', [SiteContentController::class, 'index'])->name('site-contents.index');
+        Route::put('/site-contents', [SiteContentController::class, 'update'])->name('site-contents.update');
+        // Route::view('/site-contents', 'admin.dashboard.index')->name('site-contents.index');
 
         Route::resource('categories', CategoryController::class)->except(['show']);
         Route::resource('tags', TagController::class)->except(['show', 'create', 'edit']);

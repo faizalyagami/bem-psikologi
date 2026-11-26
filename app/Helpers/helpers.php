@@ -18,3 +18,10 @@ if (!function_exists('menuUrl')) {
         return $menu->url ?? '#';
     }
 }
+
+if (!function_exists('site_content')) {
+    function site_content(string $key, $default = null)
+    {
+        return \App\Models\SiteContent::get($key, $default);
+    }
+}

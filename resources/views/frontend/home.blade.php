@@ -21,12 +21,10 @@
                         ✦ {{ setting('site_tagline', 'Fakultas Psikologi') }}
                     </span>
                     <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
-                        Bersama<br>
-                        <span class="text-accent">Berkarya,</span><br>
-                        Bersama <span class="text-accent">Berdampak</span>
+                        {!! nl2br(e(site_content('hero_title', 'Bersama Berkarya, Bersama Berdampak'))) !!}
                     </h1>
                     <p class="text-lg text-white/80 leading-relaxed mb-8 max-w-lg">
-                        {{ setting('site_description', 'Website resmi BEM Fakultas Psikologi Universitas Islam Bandung. Wadah aspirasi, kreasi, dan kontribusi mahasiswa psikologi.') }}
+                        {{ site_content('hero_subtitle', setting('site_description')) }}
                     </p>
                     <div class="flex flex-wrap gap-3">
                         <a href="{{ route('frontend.about', ['locale' => app()->getLocale()]) }}"
@@ -87,14 +85,12 @@
                 <div>
                     <span class="text-accent font-semibold text-sm uppercase tracking-wider">Sambutan Ketua</span>
                     <h2 class="font-heading text-3xl sm:text-4xl font-bold text-primary mt-3 mb-6">
-                        Sinergi untuk Psikologi yang Berdampak
+                        {{ site_content('welcome_title', 'Sinergi untuk Psikologi yang Berdampak') }}
                     </h2>
                     <blockquote class="text-lg text-gray-700 leading-relaxed border-l-4 border-accent pl-6 italic">
-                        "Selamat datang di website resmi BEM Fakultas Psikologi Unisba. Kami berkomitmen menjadi jembatan
-                        aspirasi mahasiswa dan mitra kampus dalam membangun generasi psikologi yang unggul, berintegritas,
-                        dan berdampak bagi masyarakat."
+                        "{{ site_content('welcome_message') }}"
                     </blockquote>
-                    <p class="mt-6 text-gray-600">— Nama Ketua BEM</p>
+                    <p class="mt-6 text-gray-600">— {{ site_content('welcome_name', 'Ketua BEM') }}</p>
                 </div>
             </div>
         </div>
@@ -222,7 +218,16 @@
     {{-- CTA KONTAK --}}
     <section class="py-20 bg-cream">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="font-heading text-3xl sm:text-4xl font-bold text-primary mb-4">Punya Aspirasi?</h2>
+            <h2 class="font-heading text-3xl sm:text-4xl font-bold text-primary mb-4">
+                {{ site_content('cta_title', 'Punya Aspirasi?') }}
+            </h2>
+            <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+                {{ site_content('cta_description') }}
+            </p>
+            <a href="{{ route('frontend.contact', ['locale' => app()->getLocale()]) }}" ...>
+                {{ site_content('cta_button_text', 'Kirim Aspirasi') }}
+            </a>
+            {{-- <h2 class="font-heading text-3xl sm:text-4xl font-bold text-primary mb-4">Punya Aspirasi?</h2>
             <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
                 Suarakan pendapat, saran, atau keluhan Anda untuk kemajuan Fakultas Psikologi. Kami siap mendengarkan.
             </p>
@@ -232,7 +237,7 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
-            </a>
+            </a> --}}
         </div>
     </section>
 
