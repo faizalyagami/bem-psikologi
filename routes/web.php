@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AspirationController;
+use App\Http\Controllers\Admin\AuditLogController;
 use Illuminate\Support\Facades\Route;
 
 // ===== FRONTEND CONTROLLERS =====
@@ -24,6 +25,7 @@ use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SiteContentController;
+use App\Http\Controllers\Admin\TranslationController;
 use App\Http\Controllers\Frontend\SitemapController;
 
 /*
@@ -128,6 +130,12 @@ Route::middleware(['auth', 'role:Super Admin|Admin BEM|Sekretaris|Humas|Departem
         Route::get('/site-contents', [SiteContentController::class, 'index'])->name('site-contents.index');
         Route::put('/site-contents', [SiteContentController::class, 'update'])->name('site-contents.update');
         // Route::view('/site-contents', 'admin.dashboard.index')->name('site-contents.index');
+
+        Route::get('/translations', [TranslationController::class, 'index'])->name('translations.index');
+        Route::post('/translations', [TranslationController::class, 'store'])->name('translations.store');
+        Route::delete('/translations/{translation}', [TranslationController::class, 'destroy'])->name('translations.destroy');
+
+        Route::get('/logs', [AuditLogController::class, 'index'])->name('logs.index');
 
         Route::prefix('aspirations')->name('aspirations.')->group(function () {
             Route::get('/', [AspirationController::class, 'index'])->name('index');
