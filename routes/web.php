@@ -11,6 +11,7 @@ use App\Http\Controllers\Frontend\PageController as FrontendPageController;
 use App\Http\Controllers\Frontend\EventController as FrontendEventController;
 use App\Http\Controllers\Frontend\GalleryController as FrontendGalleryController;
 use App\Http\Controllers\Frontend\ContactController as FrontendContactController;
+use App\Http\Controllers\Frontend\ProgramController as FrontendProgramController;
 
 // ===== ADMIN CONTROLLERS =====
 use App\Http\Controllers\ProfileController;
@@ -29,6 +30,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SiteContentController;
 use App\Http\Controllers\Admin\TranslationController;
+use App\Http\Controllers\Admin\ProgramController as AdminProgramController;
 use App\Http\Controllers\Frontend\OrganizationController;
 use App\Http\Controllers\Frontend\SitemapController;
 
@@ -70,6 +72,9 @@ Route::middleware(['setlocale'])->group(function () {
             Route::post('/cek-aspirasi', [FrontendContactController::class, 'showStatus'])->name('frontend.contact.status');
 
             Route::get('/struktur-organisasi', [OrganizationController::class, 'index'])->name('frontend.organization');
+
+            Route::get('/program-kerja', [FrontendProgramController::class, 'index'])->name('frontend.programs');
+            Route::get('/program-kerja/{slug}', [FrontendProgramController::class, 'show'])->name('frontend.programs.show');
 
             // Halaman statis (catch-all, WAJIB PALING BAWAH)
             Route::get('/{slug}', [FrontendPageController::class, 'show'])->name('frontend.pages.show');
@@ -160,4 +165,5 @@ Route::middleware(['auth', 'role:Super Admin|Admin BEM|Sekretaris|Humas|Departem
         Route::resource('departments', DepartmentController::class)->except(['show', 'create', 'edit']);
         Route::resource('positions', PositionController::class)->except(['show', 'create', 'edit']);
         Route::resource('members', MemberController::class)->except(['show']);
+        Route::resource('programs', AdminProgramController::class)->except(['show']);
     });

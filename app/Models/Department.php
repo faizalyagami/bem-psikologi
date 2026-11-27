@@ -22,4 +22,9 @@ class Department extends Model
     {
         return $this->hasMany(Member::class)->orderBy('sort_order');
     }
+
+    public function programs()
+    {
+        return $this->hasMany(Program::class);
+    }
 }

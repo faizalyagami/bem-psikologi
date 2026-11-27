@@ -109,6 +109,12 @@
             <span>Agenda</span>
         </a>
 
+        <a href="{{ route('admin.programs.index') }}"
+            class="sidebar-item {{ request()->routeIs('admin.programs.*') ? 'sidebar-item-active' : '' }}">
+            <i data-lucide="target" class="w-5 h-5 shrink-0"></i>
+            <span>Program Kerja</span>
+        </a>
+
         @can('manage-aspirations')
             <a href="{{ route('admin.aspirations.index') }}"
                 class="sidebar-item {{ request()->routeIs('admin.aspirations.*') ? 'sidebar-item-active' : '' }}">
